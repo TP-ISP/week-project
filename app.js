@@ -4,8 +4,13 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+const session = require('express-session');
+const flash = require('express-flash');
+const passport = require('passport');
 
-var index = require('./routes/index');
+var LocalStrategy = require('passport-local');
+
+var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
@@ -22,7 +27,42 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
+//login策略
+app.use(session({resave: false, saveUninitialized: true, secret: 'weekproject', cookie: {maxAge: 200000}}))
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
+passport.use('local', new LocalStrategy(
+  function(username, password, done){
+    var user = {
+      id: '1',
+      username: 'admin',
+      password: 'admin',
+      email: 'zhangwei_w8284@tp-link.con.cn'
+    };
+
+    if (username !== user.username) {
+      return done(null, false, {message: 'Wrong name'});
+    }
+
+    if(password !== password){
+      return done(null, false, {message: 'Wrong password'})
+    }
+
+    return done(null, user);
+  }
+));
+
+passport.serializeUser(function (user, done){
+  done(null, user);
+});
+
+passport.deserializeUser(function (user, done){
+  done(null, user);
+});
+
+app.use('/', routes);
 app.use('/users', users);
 
 // catch 404 and forward to error handler
@@ -40,7 +80,9 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error',{
+    message: err
+  });
 });
 
 module.exports = app;

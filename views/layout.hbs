@@ -1,10 +1,36 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>{{title}}</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
+
+<head>
+  <title>{{title}}</title>
+  <link rel='stylesheet' href='../stylesheets/style.css' type="text/css" />
+</head>
+
+<body>
+  <div class="container">
+    <nav class="navbar navbar-inverse">
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">首页 <span class="sr-only">(current)</span></a></li>
+          <li><a href="/project">Project</a></li>
+          <li><a href="/weekly">Weekly</a></li>
+          <li><a href="/device">Device</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/login">Login</a></li>
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </nav>
     {{{body}}}
-  </body>
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+      <ol class="breadcrumb">
+  <li><a href="#">Home</a></li>
+  <li><a href="#">Library</a></li>
+  <li class="active">Data</li>
+</ol>
+    </nav>
+  </div>
+</body>
+
 </html>
