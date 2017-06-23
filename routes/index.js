@@ -9,6 +9,7 @@ const model = require('../model/model');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
+  req.flash('info', 'Welcome');
   res.render('index', {
     title: 'Express'
   });
@@ -72,6 +73,7 @@ function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
     return next()
   }
+  req.flash('You need to login!')
   res.redirect('/login');
 }
 
