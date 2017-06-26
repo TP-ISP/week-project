@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const passport = require('passport');
 const model = require('../model/model');
+const moment = require('moment');
 // const restc = require('restc');
 
 
@@ -48,7 +49,7 @@ router.get('/project', function (req, res) {
       res.redirect('/');
     }
 
-    if (typeof(req.user) == "undefined") {
+    if (typeof (req.user) == "undefined") {
       return res.render('project', {
         projects: projects,
         username: "anonymous"
@@ -61,11 +62,57 @@ router.get('/project', function (req, res) {
   })
 });
 
-router.get('/weekly', function(req,res){
-  res.render('weekly');
+router.get('/weekly', function (req, res) {
+  if (req.isAuthenticated()) {
+    var Weekly = model.Weekly;
+    // console.log(Weekly);
+    var username = req.user.username;
+    // console.log(username);
+    var wherestr = {
+      'name': username
+    };
+    Weekly.find(wherestr,function (err, weeklys) {
+      if (err) {
+        return res.redirect('/');
+      } else {
+        console.log(weeklys);
+        return res.render('weekly', {
+          title: "weekly",
+          weeklys: weeklys,
+          username: username
+        })
+      }
+    })
+  } else {
+    return res.render('weekly');
+  }
 })
 
-router.get('/device', function(req,res){
+router.post('/weekly', function (req, res) {
+  if(req.isAuthenticated()){
+    var name = req.user.username;
+    var week = moment().weeksInYear();
+    var involve = req.body.involve;
+    var done = req.body.done;
+    var plan = req.body.plan;
+    var description = req.body.description;
+    var updated = moment().hours().toString();
+    var insertData = {
+      week: week,
+      name: name,
+      involve: involve,
+      done: done,
+      plan: plan,
+      description: description,
+      updated: updated
+    };
+    console.log(insertData);
+  }
+
+  return res.redirect('/weekly');
+})
+
+router.get('/device', function (req, res) {
   res.render('device');
 })
 

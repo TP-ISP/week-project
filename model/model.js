@@ -23,7 +23,8 @@ const ProjectSchema = new Schema({
   maintainer:{type: String},
   frontling: {type: String},
   product: {type: String},
-  description: {type: String, required: true}
+  description: {type: String, required: true},
+  updated: String
 });
 
 const WeeklySchema = new Schema({
@@ -32,7 +33,8 @@ const WeeklySchema = new Schema({
   involve: {type: String},
   done: {type: String, required:true},
   plan: {type: String},
-  description: {type: String}
+  description: {type: String},
+  updated: String
 });
 
 const DeviceSchema = new Schema({
@@ -40,7 +42,8 @@ const DeviceSchema = new Schema({
   owner: {type: String},
   keeper: {type: String},
   platform: {type: String},
-  description: {type: String}
+  description: {type: String},
+  updated: String
 });
 
 var User = mongoose.model('User', UserSchema);
