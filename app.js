@@ -28,7 +28,7 @@ app.use(cookieParser('weekproject'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //login策略
-app.use(session({resave: false, saveUninitialized: true, secret: 'weekproject', cookie: {maxAge: 200000}}))
+app.use(session({resave: false, saveUninitialized: true, secret: 'weekproject', cookie: {maxAge: 2000000}}))
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());

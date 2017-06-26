@@ -75,7 +75,7 @@ router.get('/weekly', function (req, res) {
       if (err) {
         return res.redirect('/');
       } else {
-        console.log(weeklys);
+        // console.log(weeklys);
         return res.render('weekly', {
           title: "weekly",
           weeklys: weeklys,
@@ -84,19 +84,19 @@ router.get('/weekly', function (req, res) {
       }
     })
   } else {
-    return res.render('weekly');
+    return res.redirect('/');
   }
 })
 
 router.post('/weekly', function (req, res) {
   if(req.isAuthenticated()){
     var name = req.user.username;
-    var week = moment().weeksInYear();
+    var week = moment().dayOfYear()/7;
     var involve = req.body.involve;
     var done = req.body.done;
     var plan = req.body.plan;
     var description = req.body.description;
-    var updated = moment().hours().toString();
+    var updated = moment().dayOfYear();
     var insertData = {
       week: week,
       name: name,
@@ -107,6 +107,9 @@ router.post('/weekly', function (req, res) {
       updated: updated
     };
     console.log(insertData);
+    var Weekly = model.Weekly;
+    var thisweekEntity = new Weekly(insertData);
+    thisweekEntity.save();
   }
 
   return res.redirect('/weekly');
@@ -114,6 +117,24 @@ router.post('/weekly', function (req, res) {
 
 router.get('/device', function (req, res) {
   res.render('device');
+})
+
+router.get('/addWeekly', function (req, res) {
+  if(req.isAuthenticated()){
+    return res.render('addWeekly',{
+      title: "addWeekly",
+      username: req.user.username
+    });
+  }
+
+  return res.redirect('/');
+})
+
+router.delete('/delWeekly',function(req, res){
+  var id = req.id;
+  console.log(id);
+  var Weekly = model.Weekly;
+  Weekly.findByIdAndRemove({_id:id});
 })
 
 function isLoggedIn(req, res, next) {

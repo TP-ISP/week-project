@@ -1,11 +1,23 @@
-<p>{{username}}</p>
+<h1 class="text-nowrap text-right">Welcome,{{username}}!</h1>
+<div class="page-header">
+    <h1>我的周报 <small>查看待办事项</small></h1>
+</div>
 <div>
     {{#each weeklys}}
-    <div class="list-group">
+
+<div class="panel panel-default">
+  <div class="panel-heading">{{name}}</div>
+  <div class="panel-body">
+      <div class="list-group">
   <a href="#" class="list-group-item active">
-    <h4 class="list-group-item-heading">{{name}}</h4>
-    <p class="list-group-item-text">{{done}}</p>
+    <h4 class="list-group-item-heading">主要工作：{{done}}</h4>
+    <p class="list-group-item-text">下周计划：{{plan}}</p>
   </a>
+</div>
+    <p>第 {{week}} 周</p>
+    <p>更新时间：{{updated}}</p>
+    <a href="/delWeekly?id={{_id}}"><button type="button" class="btn btn-danger">（危险）Danger</button></a>
+  </div>
 </div>
     {{/each}}
 </div>
