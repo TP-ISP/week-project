@@ -3,32 +3,20 @@
     <form action="/weekly" method="post">
         <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" class="form-control" placeholder="Recipient's username" aria-describedby="basic-addon2" name="name">
+            <input type="text" class="form-control" value="{{username}}" disabled name="name">
         </div>
         <div class="form-group">
             <label for="done">What you`ve done</label>
             <textarea name="done" class="form-control" rows="6"></textarea>
         </div>
         <div class="form-group">
-            <label for="plan">People who involed in your project</label>
-            <div class="radio">
-                <label>
-    <input type="radio" name="involve" id="involve" value="option1">
-    wenzhenyu
-  </label>
-            </div>
-            <div class="radio">
-                <label>
-    <input type="radio" name="involve" id="involve" value="option2">
-    zhonglianbo
-  </label>
-            </div>
-            <div class="radio disabled">
-                <label>
-    <input type="radio" name="involve" id="involve" value="option3" >
-    caijidi
-  </label>
-            </div>
+            <label for="involve">People who involed in your project</label>
+            <select class="form-control" name="involve">
+  <option value="温震宇">温震宇</option>
+  <option value="钟联波">钟联波</option>
+  <option value="蔡及第">蔡及第</option>
+  <option value="李伟">李伟</option>
+</select>
         </div>
         <div class="form-group">
             <label for="plan">What`s your plan next week</label>

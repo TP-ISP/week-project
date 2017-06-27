@@ -96,19 +96,21 @@ router.get('/addProject', function(req, res){
 router.post('/addProject', function(req, res){
   if(req.isAuthenticated()){
     var Project = model.Project;
-    var ProjectEntity = new Project({
-      name: req.query.name,
+    var newProject = {
+      name: req.body.name,
       status: "正常",
-      area: req.query.area,
-      client: req.query.client,
+      area: req.body.area,
+      client: req.body.client,
       process: "开始",
-      leader: req.query.leader,
-      maintainer: req.query.maintainer,
-      frontling: req.query.frontling,
-      product: req.query.product,
-      description: req.query.description,
+      leader: req.body.leader,
+      maintainer: req.body.maintainer,
+      frontling: req.body.frontling,
+      product: req.body.product,
+      description: req.body.description,
       updated: moment().date()
-    });
+    };
+    console.log(req.body.maintainer)
+    var ProjectEntity = new Project(newProject);
     ProjectEntity.save();
     res.redirect('/project');
   }else{
@@ -188,8 +190,14 @@ router.get('/delWeekly',function(req, res){
   var id = req.query.id;
   console.log(req.query);
   var Weekly = model.Weekly;
-  Weekly.findByIdAndRemove({_id:id});
-  res.redirect('/weekly');
+  Weekly.findByIdAndRemove(id, function(err, weekly){
+    if(err){
+      console.log(err);
+    }
+    console.log('weekly deleted:', weekly);
+    return res.redirect('/weekly');
+  });
+  // return res.redirect('/weekly');
 })
 
 function isLoggedIn(req, res, next) {
