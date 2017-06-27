@@ -1,11 +1,25 @@
-<p>{{username}}</p>
 <div>
-    {{#each projects}}
-    <div class="list-group">
-  <a href="#" class="list-group-item active">
-    <h4 class="list-group-item-heading">{{name}}</h4>
-    <p class="list-group-item-text">{{description}}</p>
-  </a>
+  <div class="page-header">
+  <h1>项目列表 <small>最近更新：</small></h1>
 </div>
+  <table class="table table-condensed table-striped">
+    <tr>
+      <th class="active">项目名称</th>
+      <th class="success">状态</th>
+      <th class="warning">地区</th>
+      <th class="danger">研发</th>
+      <th class="info">前线</th>
+      <th class="warning">产品</th>
+    </tr>
+    {{#each projects}}
+    <tr>
+      <td class="active">{{name}}</td>
+      <td class="success">{{status}}</td>
+      <td class="warning">{{area}}</td>
+      <td class="danger">{{maintainer}}</td>
+      <td class="info">{{frontling}}</td>
+      <td class="warning">{{product}}</td>
+    </tr>
     {{/each}}
+  </table>
 </div>

@@ -62,6 +62,22 @@ router.get('/project', function (req, res) {
   })
 });
 
+router.get('/projectDetail', function (req,res){
+  var id = req.query.id;
+  console.log(id);
+  var Project = model.Project;
+  Project.find({_id: id}, function(err, project){
+    if(err) {
+      return res.redirect('/error');
+    }
+
+    return res.render('projectDetail',{
+      title: "project detail",
+      project: project
+    })
+  })
+})
+
 router.get('/weekly', function (req, res) {
   if (req.isAuthenticated()) {
     var Weekly = model.Weekly;
@@ -130,11 +146,12 @@ router.get('/addWeekly', function (req, res) {
   return res.redirect('/');
 })
 
-router.delete('/delWeekly',function(req, res){
-  var id = req.id;
-  console.log(id);
+router.get('/delWeekly',function(req, res){
+  var id = req.query.id;
+  console.log(req.query);
   var Weekly = model.Weekly;
   Weekly.findByIdAndRemove({_id:id});
+  res.redirect('/weekly');
 })
 
 function isLoggedIn(req, res, next) {

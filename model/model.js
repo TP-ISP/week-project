@@ -15,11 +15,11 @@ const UserSchema = new Schema({
 
 const ProjectSchema = new Schema({
   name: {type: String, required: true},
-  status: {type: Number},
+  status: {type: String},
   area: {type: String},
   client: {type: String},
-  process: {type: Number},
-  leader: {type: Number},
+  process: {type: String},
+  leader: {type: String},
   maintainer:{type: String},
   frontling: {type: String},
   product: {type: String},
