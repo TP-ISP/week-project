@@ -1,0 +1,56 @@
+<form action="/addProject" method="post">
+    <div class="form-group">
+        <label for="name">项目名称：</label>
+        <input type="text" class="form-control" id="name" placeholder="name" name="name">
+    </div>
+    <div class="form-group">
+        <label for="client">客户名称：</label>
+        <input type="text" class="form-control" id="client" placeholder="client" name="client">
+    </div>
+    <div class="form-group">
+        <label for="area">地区：</label>
+        <select class="form-control" name="area">
+  <option value="North America">North America</option>
+  <option value="South America">South America</option>
+  <option value="East Europe">East Europe</option>
+  <option value="West Europe">West Europe</option>
+  <option value="Middle-east Africa">Middle-east Africa</option>
+  <option value="North Africa">North Africa</option>
+  <option value="Asia and Pacific">Asia and Pacific</option>
+</select>
+    </div>
+    <div class="form-group">
+        <label for="client">研发组：</label>
+        <select class="form-control" name="area">
+  <option value="温震宇">温震宇</option>
+  <option value="钟联波">钟联波</option>
+  <option value="蔡及第">蔡及第</option>
+  <option value="李伟">李伟</option>
+</select>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="maintainer">研发：</label>
+                <input type="text" class="form-control" id="client" placeholder="RD" name="maintaine">
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="product">产品：</label>
+                <input type="text" class="form-control" id="client" placeholder="PM" name="product">
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="frontling">前线：</label>
+                <input type="text" class="form-control" id="client" placeholder="FM" name="frontling">
+            </div>
+        </div>
+    </div>
+        <div class="form-group">
+            <label for="description">问题描述及背景概括</label>
+            <textarea name="description" class="form-control" rows="4"></textarea>
+        </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+</form>

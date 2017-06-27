@@ -76,6 +76,44 @@ router.get('/projectDetail', function (req,res){
       project: project
     })
   })
+});
+
+router.get('/addProject', function(req, res){
+  if(req.isAuthenticated()){
+    if(req.user.username === "admin"){
+      res.render('addProject',{
+        title: 'add proejct',
+        name: req.user.username
+      })
+    }else{
+      res.redirect('/user')
+    }
+  }else{
+    return res.redirect("/");
+  }
+});
+
+router.post('/addProject', function(req, res){
+  if(req.isAuthenticated()){
+    var Project = model.Project;
+    var ProjectEntity = new Project({
+      name: req.query.name,
+      status: "正常",
+      area: req.query.area,
+      client: req.query.client,
+      process: "开始",
+      leader: req.query.leader,
+      maintainer: req.query.maintainer,
+      frontling: req.query.frontling,
+      product: req.query.product,
+      description: req.query.description,
+      updated: moment().date()
+    });
+    ProjectEntity.save();
+    res.redirect('/project');
+  }else{
+    return res.redirect('/user');
+  };
 })
 
 router.get('/weekly', function (req, res) {
@@ -107,12 +145,12 @@ router.get('/weekly', function (req, res) {
 router.post('/weekly', function (req, res) {
   if(req.isAuthenticated()){
     var name = req.user.username;
-    var week = moment().dayOfYear()/7;
+    var week = moment().week();
     var involve = req.body.involve;
     var done = req.body.done;
     var plan = req.body.plan;
     var description = req.body.description;
-    var updated = moment().dayOfYear();
+    var updated = moment().date();
     var insertData = {
       week: week,
       name: name,
