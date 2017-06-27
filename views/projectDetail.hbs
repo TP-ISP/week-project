@@ -1,16 +1,22 @@
+<div class="page-header">
+    <h1>{{project.name}} <small><a href="/project">查看所有项目</a></small></h1>
+</div>
+<div class="alert alert-success" role="alert"><p>区域： {{project.area}}</p></div>
+<div class="alert alert-info" role="alert"><p>研发负责人： {{project.leader}} 组的 {{project.maintainer}}</p></div>
+<div class="alert alert-warning" role="alert"><p>产品经理： {{project.product}}</p></div>
+<div class="alert alert-danger" role="alert"><p>业务前线： {{project.frontling}}</p></div>
 <form>
-  <div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
-  </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-  </div>
-  <div class="checkbox">
-    <label>
-      <input type="checkbox"> Check me out
-    </label>
-  </div>
-  <button type="submit" class="btn btn-default">Submit</button>
+    <div class="form-group">
+        <label for="status">状态</label>
+        <select class="form-control" name="status" value="{{project.status}}">
+  <option value="正常">正常</option>
+  <option value="异常">异常</option>
+  <option value="预警">预警</option>
+</select>
+    </div>
+        <div class="form-group">
+            <label for="description">备注：</label>
+            <textarea name="description" class="form-control" rows="3" placeholder="{{project.description}}"></textarea>
+        </div>
+    <button type="submit" class="btn btn-default">Submit</button>
 </form>

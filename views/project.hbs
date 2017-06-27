@@ -10,15 +10,17 @@
       <th class="danger">研发</th>
       <th class="info">前线</th>
       <th class="warning">产品</th>
+      <th></th>
     </tr>
     {{#each projects}}
     <tr>
-      <td class="active">{{name}}</td>
+      <td class="active"><a href="/projectDetail?id={{_id}}">{{name}}</a></td>
       <td class="success">{{status}}</td>
       <td class="warning">{{area}}</td>
       <td class="danger">{{maintainer}}</td>
       <td class="info">{{frontling}}</td>
       <td class="warning">{{product}}</td>
+      <td><button type="button" class="btn btn-link"><a href="/delProject?id={{_id}}">删除</a></button></td>
     </tr>
     {{/each}}
   </table>

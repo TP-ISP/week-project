@@ -70,10 +70,10 @@ router.get('/projectDetail', function (req,res){
     if(err) {
       return res.redirect('/error');
     }
-
+    console.log(project);
     return res.render('projectDetail',{
       title: "project detail",
-      project: project
+      project: project[0]
     })
   })
 });
@@ -116,6 +116,18 @@ router.post('/addProject', function(req, res){
   }else{
     return res.redirect('/user');
   };
+})
+
+router.get("/delProject", function(req, res){
+  var Project = model.Project;
+  var id = req.query.id;
+  Project.findByIdAndRemove(id, function(err, project){
+    if(err){
+      console.log(err);
+    }
+
+    return res.redirect("/project");
+  })
 })
 
 router.get('/weekly', function (req, res) {
