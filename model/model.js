@@ -18,12 +18,15 @@ const ProjectSchema = new Schema({
   status: {type: String},
   area: {type: String},
   client: {type: String},
-  process: {type: String},
+  process: {type: Number},
+  period: {type: String, default:'标案评估'},
   leader: {type: String},
   maintainer:{type: String},
   frontling: {type: String},
   product: {type: String},
-  description: {type: String, required: true},
+  finished: {type: String, default: "请添加已经完成的部分"},
+  plan: {type: String, default: '请添加下个阶段的计划以及完成时间'},
+  description: {type: String, default:''},
   updated: String
 });
 

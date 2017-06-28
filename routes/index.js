@@ -12,7 +12,8 @@ const moment = require('moment');
 router.get('/', function (req, res, next) {
   req.flash('info', 'Welcome');
   res.render('index', {
-    title: 'Express'
+    title: 'Express',
+    username:"anonymous"
   });
 });
 
@@ -83,7 +84,7 @@ router.get('/addProject', function(req, res){
     if(req.user.username === "admin"){
       res.render('addProject',{
         title: 'add proejct',
-        name: req.user.username
+        username: req.user.username
       })
     }else{
       res.redirect('/user')
