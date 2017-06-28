@@ -102,7 +102,8 @@ router.post('/addProject', function(req, res){
       status: "正常",
       area: req.body.area,
       client: req.body.client,
-      process: "开始",
+      process: 0,
+      period: "开始",
       leader: req.body.leader,
       maintainer: req.body.maintainer,
       frontling: req.body.frontling,
@@ -117,6 +118,10 @@ router.post('/addProject', function(req, res){
   }else{
     return res.redirect('/user');
   };
+})
+
+router.post('/modProject', function(req,res){
+  res.redirect('/project');
 })
 
 router.get("/delProject", function(req, res){
