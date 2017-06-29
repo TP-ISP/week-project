@@ -65,7 +65,8 @@ router.get('/project', function (req, res) {
 
 router.get('/projectDetail', function (req,res){
   var id = req.query.id;
-  console.log(id);
+  // console.log(id);
+  var username = req.user?req.user.username:"anonymous";
   var Project = model.Project;
   Project.find({_id: id}, function(err, project){
     if(err) {
@@ -74,7 +75,8 @@ router.get('/projectDetail', function (req,res){
     console.log(project);
     return res.render('projectDetail',{
       title: "project detail",
-      project: project[0]
+      project: project[0],
+      username: username
     })
   })
 });
@@ -108,6 +110,8 @@ router.post('/addProject', function(req, res){
       maintainer: req.body.maintainer,
       frontling: req.body.frontling,
       product: req.body.product,
+      finished: [{time: moment().date(), text:"还没有完成任何计划"}],
+      plan: req.body.plan,
       description: req.body.description,
       updated: moment().date()
     };
