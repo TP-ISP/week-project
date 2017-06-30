@@ -19,7 +19,8 @@ router.get('/', function (req, res, next) {
 
 router.get('/login', function (req, res, next) {
   res.render('login', {
-    title: 'Login'
+    title: 'Login',
+    username: 'anonymous'
   })
 });
 
@@ -72,7 +73,7 @@ router.get('/projectDetail', function (req,res){
     if(err) {
       return res.redirect('/error');
     }
-    console.log(project);
+    console.log("detail---"+project[0].finished);
     return res.render('projectDetail',{
       title: "project detail",
       project: project[0],
@@ -110,12 +111,12 @@ router.post('/addProject', function(req, res){
       maintainer: req.body.maintainer,
       frontling: req.body.frontling,
       product: req.body.product,
-      finished: [{time: moment().date(), text:"还没有完成任何计划"}],
-      plan: req.body.plan,
+      finished: [{time: moment().month() + '-' + moment().date(), text:"还没有完成任何计划"}],
+      plan: {time:moment().month() + '-' + moment().date(),text:req.body.plan},
       description: req.body.description,
       updated: moment().date()
     };
-    console.log(req.body.maintainer)
+    // console.log(req.body.maintainer)
     var ProjectEntity = new Project(newProject);
     ProjectEntity.save();
     res.redirect('/project');
@@ -125,7 +126,31 @@ router.post('/addProject', function(req, res){
 })
 
 router.post('/modProject', function(req,res){
+  if(req.isAuthenticated()){
+    var Project = model.Project;
+    var Plan = {time: moment().month() + '-' + moment().date(), text: req.body.plan};
+    var id = req.body.id;
+    // console.log("modProject---"+id);
+    Project.find({_id:id}, function(err, project){
+      if(err){
+        console.log(err);
+      }
+      project[0].status = req.body.status;
+      project[0].period = req.body.period;
+      var finished = project[0].finished;
+      var plan = project[0].plan;
+      finished.push(plan);
+      console.log("modProject---"+finished);
+      project[0].finished = finished;
+      project[0].plan = Plan;
+      project[0].description = req.body.description;
+      // project.save();
+      console.log("modProject---"+project[0].finished);
+    });
+    res.redirect('/projectDetail?id='+req.body.id);
+  }else{
   res.redirect('/project');
+  }
 })
 
 router.get("/delProject", function(req, res){

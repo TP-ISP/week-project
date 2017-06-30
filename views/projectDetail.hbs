@@ -20,7 +20,10 @@
          <div id="main" style="width: 80%;height:400px;"></div>
     </div>
 </div>
-<form>
+<form action="/modProject" method="post">
+    <div>
+        <input type="hidden" value={{project.id}} name="id" />
+    </div>
     <div class="row">
         <div class="col-sm-5">
     <div class="form-group">
@@ -34,7 +37,7 @@
     </div>
     <div class="col-sm-5 col-sm-offset-1">
     <div class="form-group">
-        <label for="status">项目阶段</label>
+        <label for="period">项目阶段</label>
         <select class="form-control" name="period" value="{{project.period}}">
             <option value="标案评估">标案评估</option>
             <option value="软件定制">软件定制</option>
@@ -59,8 +62,8 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="description">下一阶段计划：</label>
-        <textarea name="description" class="form-control" rows="3" placeholder="{{project.plan}}"></textarea>
+        <label for="plan">下一阶段计划：</label>
+        <textarea name="plan" class="form-control" rows="3" placeholder="{{project.plan.text}}"></textarea>
     </div>
     <div class="form-group">
         <label for="description">备注：</label>

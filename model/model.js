@@ -25,7 +25,7 @@ const ProjectSchema = new Schema({
   frontling: {type: String},
   product: {type: String},
   finished: [{time: String, text: String}],
-  plan: {type: String, default: '请添加下个阶段的计划以及完成时间'},
+  plan: {time:String, text: String},
   description: {type: String, default:''},
   updated: String
 });
