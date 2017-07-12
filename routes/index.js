@@ -144,7 +144,8 @@ router.post('/modProject', function(req,res){
       project[0].finished = finished;
       project[0].plan = Plan;
       project[0].description = req.body.description;
-      // project.save();
+      console.log(project[0]);
+      project[0].save();
       console.log("modProject---"+project[0].finished);
     });
     res.redirect('/projectDetail?id='+req.body.id);
