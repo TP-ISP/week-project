@@ -73,7 +73,7 @@ router.get('/projectDetail', function (req,res){
     if(err) {
       return res.redirect('/error');
     }
-    console.log("detail---"+project[0].finished);
+    // console.log("detail---"+project[0].finished);
     return res.render('projectDetail',{
       title: "project detail",
       project: project[0],
@@ -217,6 +217,15 @@ router.post('/weekly', function (req, res) {
   }
 
   return res.redirect('/weekly');
+})
+
+router.get('/weeklyDetail', function(req, res) {
+  if(req.isAuthenticated()){
+    res.render('weeklyDetail',{
+      title: 'weeklyDetail',
+      username: req.user.username
+    })
+  }
 })
 
 router.get('/device', function (req, res) {
