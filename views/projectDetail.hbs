@@ -22,6 +22,8 @@
          <div id="main" style="width: 80%;height:400px;"></div>
     </div>
 </div>
+
+
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
@@ -82,7 +84,7 @@
   </div>
 </div>
 
-<div class="form-group">
+{{!-- <div class="form-group">
     <div class="list-group">
         <label>已经完成的计划：</label> {{#each project.finished}}
         <a href="#" class="list-group-item active">
@@ -91,12 +93,38 @@
         </a>
         {{/each}}
     </div>
+</div> --}}
+<div class="row">
+    <div class="page-header">
+  <h2>当前计划</h2>
 </div>
+  <div class="well">
     <div class="panel panel-default">
         <div class="panel-body">
             {{project.plan.text}}
         </div>
     </div>
+</div>
+
+</div>
+<div class="row">
+<div class="page-header">
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseFinished" aria-expanded="false" aria-controls="collapseFinished">
+  点击展开
+</button>
+</div>
+<div class="collapse" id="collapseFinished">
+  <div class="well">
+    {{#each project.finished}}
+        <a href="#" class="list-group-item active">
+            <h4 class="list-group-item-heading">{{time}}</h4>
+            <p class="list-group-item-text">{{text}}</p>
+        </a>
+        {{/each}}
+  </div>
+</div>
+</div>
+
 <script src="../javascripts/echarts.min.js"></script>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
