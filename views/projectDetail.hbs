@@ -26,7 +26,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -78,7 +78,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        {{!-- <button type="button" class="btn btn-primary">Save changes</button> --}}
       </div>
     </div>
   </div>
@@ -107,8 +107,8 @@
 </div>
 
 </div>
-<div class="row">
-<div class="page-header">
+ <div class="row">
+{{!-- <div class="page-header">
   <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseFinished" aria-expanded="false" aria-controls="collapseFinished">
   点击展开
 </button>
@@ -122,8 +122,22 @@
         </a>
         {{/each}}
   </div>
+</div> --}}
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#finished">Finished Work</button>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="finished">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+    {{#each project.finished}}
+        <a href="#" class="list-group-item active">
+            <h4 class="list-group-item-heading">{{time}}</h4>
+            <p class="list-group-item-text">{{text}}</p>
+        </a>
+        {{/each}}
+    </div>
+  </div>
 </div>
-</div>
+</div> 
 
 <script src="../javascripts/echarts.min.js"></script>
 <script type="text/javascript">

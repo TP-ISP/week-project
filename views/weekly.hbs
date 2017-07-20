@@ -2,21 +2,38 @@
 <div class="page-header">
     <h1>我的周报 <small><a href="/addWeekly">添加周报</a></small></h1>
 </div>
-<div>
+<div class="row">
     {{#each weeklys}}
 
-<div class="panel panel-default">
+{{!-- <div class="panel panel-default">
   <div class="panel-heading">{{name}}</div>
   <div class="panel-body">
       <div class="list-group">
-  <a href="/weeklyDetail?id={{_id}}" class="list-group-item active">
-    <h4 class="list-group-item-heading">主要工作：{{done}}</h4>
+  <a data-toggle="modal" data-target="#workContent" class="list-group-item active">
+    
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="workContent">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+主要工作：{{done}}
+    </div>
+  </div>
+</div>
     <p class="list-group-item-text">下周计划：{{plan}}</p>
   </a>
 </div>
     <p>第 {{week}} 周</p>
     <a href="/delWeekly?id={{_id}}"><button type="button" class="btn btn-danger">删除</button></a>
   </div>
-</div>
+</div> --}}
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <div class="caption">
+        <h3>用户： {{name}} 周次：{{week}} 更新时间： {{updated}}</h3>
+        <p>主要工作：{{done}}</p>
+        <p>下周计划： {{plan}}</p>
+        <p><a href="/delWeekly?id={{_id}}" class="btn btn-primary" role="button">Delete</a> </p>
+      </div>
+    </div>
+  </div>
     {{/each}}
 </div>

@@ -219,14 +219,14 @@ router.post('/weekly', function (req, res) {
   return res.redirect('/weekly');
 })
 
-router.get('/weeklyDetail', function(req, res) {
-  if(req.isAuthenticated()){
-    res.render('weeklyDetail',{
-      title: 'weeklyDetail',
-      username: req.user.username
-    })
-  }
-})
+// router.get('/weeklyDetail', function(req, res) {
+//   if(req.isAuthenticated()){
+//     res.render('weeklyDetail',{
+//       title: 'weeklyDetail',
+//       username: req.user.username
+//     })
+//   }
+// })
 
 router.get('/device', function (req, res) {
   res.render('device');
