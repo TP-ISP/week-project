@@ -1,9 +1,14 @@
 var express = require('express');
 var router = express.Router();
+const passport = require('passport');
+const model = require('../model/model');
+const moment = require('moment');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.get('/project', function(req, res, next) {
+  if(req.isAuthenticated()){
+    
+  }
 });
 
 module.exports = router;

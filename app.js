@@ -35,12 +35,17 @@ app.use(flash());
 
 passport.use('local', new LocalStrategy(
   function(username, password, done){
-    var user = {
+    var user = [{
       id: '1',
       username: 'admin',
       password: 'admin',
       email: 'zhangwei_w8284@tp-link.con.cn'
-    };
+    },{
+      id: '2',
+      username: 'zhangwei',
+      password: '19921221',
+      email: 'zhangwei_w8284@tp-link.con.cn'
+    }];
 
     if (username !== user.username) {
       return done(null, false, {message: 'Wrong name'});

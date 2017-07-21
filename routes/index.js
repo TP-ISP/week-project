@@ -229,11 +229,19 @@ router.post('/weekly', function (req, res) {
 // })
 
 router.get('/device', function (req, res) {
-  res.render('device');
+  if(req.isAuthenticated()){
+    return res.render('device', {
+      title: "device",
+      username: req.user.username
+    });
+  }else{
+    res.redirect('/login');
+  }
 })
 
 router.get('/addWeekly', function (req, res) {
   if(req.isAuthenticated()){
+    console.log(req.user);
     return res.render('addWeekly',{
       title: "addWeekly",
       username: req.user.username
