@@ -12,6 +12,7 @@ var LocalStrategy = require('passport-local');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var User = require('./model/user');
 
 var app = express();
 
@@ -47,15 +48,27 @@ passport.use('local', new LocalStrategy(
       email: 'zhangwei_w8284@tp-link.con.cn'
     }];
 
-    if (username !== user.username) {
-      return done(null, false, {message: 'Wrong name'});
-    }
+    User.findOne(username, function(err, user){
+      if (err) {
+        return done(err);
+      }
 
-    if(password !== password){
-      return done(null, false, {message: 'Wrong password'})
-    }
+      if (password !== user.password){
+        return done(null, false, {message: 'Wrong password'})
+      }
 
-    return done(null, user);
+      return done(null, user);
+    })
+
+    // if (username !== user.username) {
+    //   return done(null, false, {message: 'Wrong name'});
+    // }
+
+    // if(password !== password){
+    //   return done(null, false, {message: 'Wrong password'})
+    // }
+
+    // return done(null, user);
   }
 ));
 
