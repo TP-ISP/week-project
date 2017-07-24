@@ -11,20 +11,21 @@ const userlist = [{
     }];
 
 module.exports.findOne = function(username, callback) {
-    var user = {
-        id: '0',
-        username: 'anonymous',
-        password: '',
-        email: ''
-    }
+    // var user = {
+    //     id: '0',
+    //     username: 'anonymous',
+    //     password: '',
+    //     email: ''
+    // }
     
     for(i=0; i<=userlist.length;i++){
         if(userlist[i].username == username){
-            console.log(userlist[i])
-            user =  userlist[i];
+            // console.log(userlist[i])
+            // user =  userlist[i];
+            callback(null, userlist[i]);
         }
     }
 
-    callback(null, user);
+    
 
 }

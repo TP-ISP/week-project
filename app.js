@@ -49,6 +49,7 @@ passport.use('local', new LocalStrategy(
     }];
 
     User.findOne(username, function(err, user){
+      console.log(user);
       if (err) {
         return done(err);
       }
