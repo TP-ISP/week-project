@@ -8,6 +8,8 @@ const moment = require('moment');
 router.get('/project', function(req, res, next) {
   if(req.isAuthenticated()){
     
+  }else{
+    res.redirect('/login');
   }
 });
 

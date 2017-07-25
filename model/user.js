@@ -26,6 +26,4 @@ module.exports.findOne = function(username, callback) {
         }
     }
 
-    
-
 }
