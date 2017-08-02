@@ -55,15 +55,4 @@ var Weekly = mongoose.model('Weekly', WeeklySchema);
 var Device = mongoose.model('Device', DeviceSchema);
 
 
-// var TestProject = new Project({ name: 'WR3005N3V1 Project', status: 0, area: 'South America', client: 'Columbia',process: 3 , leader: 1, maintainer: 'wangjiawei', frontling: 'eric', product: 'jefrey', description: '中文显示测试'});
-
-
-// TestProject.save(function (err) {
-//   if (err) {
-//     console.log(err);
-//     return 0;
-//   }
-//   console.log('data save finished');
-// });
-
 module.exports = {User: User, Project: Project, Weekly: Weekly, Device: Device};

@@ -1,25 +1,25 @@
 <div>
   <div class="page-header">
-  <h1>项目列表 <small><a href="/addProject">新增项目</a></small></h1>
+  <h1>项目列表{{#if adminuser}}<small><a href="/addProject">添加项目</a></small>{{/if}}</h1>
 </div>
-  <table class="table table-condensed table-striped">
+  <table class="table table-bordered">
     <tr>
-      <th class="active">项目名称</th>
-      <th class="success">状态</th>
-      <th class="warning">地区</th>
-      <th class="danger">研发</th>
-      <th class="info">前线</th>
-      <th class="warning">产品</th>
+      <th >项目名称</th>
+      <th >状态</th>
+      <th >地区</th>
+      <th >研发</th>
+      <th >前线</th>
+      <th >产品</th>
       <th></th>
     </tr>
     {{#each projects}}
     <tr>
-      <td class="active"><a href="/projectDetail?id={{_id}}">{{name}}</a></td>
-      <td class="success">{{status}}</td>
-      <td class="warning">{{area}}</td>
-      <td class="danger">{{maintainer}}</td>
-      <td class="info">{{frontling}}</td>
-      <td class="warning">{{product}}</td>
+      <td ><a href="/projectDetail?id={{_id}}">{{name}}</a></td>
+      <td >{{status}}</td>
+      <td >{{area}}</td>
+      <td >{{maintainer}}</td>
+      <td >{{frontling}}</td>
+      <td >{{product}}</td>
       <td><button type="button" class="btn btn-link"><a href="/delProject?id={{_id}}">删除</a></button></td>
     </tr>
     {{/each}}

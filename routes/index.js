@@ -45,35 +45,39 @@ router.get('/logout', function (req, res) {
 
 router.get('/project', function (req, res) {
   var Project = model.Project;
-  Project.find(function (err, projects) {
+  if(req.isAuthenticated()){
+    Project.find(function (err, projects) {
     if (err) {
       req.flash('error', 'something wrong with database.');
       res.redirect('/');
     }
 
-    if (typeof (req.user) == "undefined") {
+    if(req.user.username == 'admin') {
       return res.render('project', {
         projects: projects,
-        username: "anonymous"
+        username: req.user.username,
+        adminuser: true
       })
     }
+
     return res.render('project', {
       projects: projects,
       username: req.user.username
     })
   })
+  }else{
+    res.redirect('/');
+  }
 });
 
 router.get('/projectDetail', function (req,res){
   var id = req.query.id;
-  // console.log(id);
   var username = req.user?req.user.username:"anonymous";
   var Project = model.Project;
   Project.find({_id: id}, function(err, project){
     if(err) {
       return res.redirect('/error');
     }
-    // console.log("detail---"+project[0].finished);
     return res.render('projectDetail',{
       title: "project detail",
       project: project[0],
