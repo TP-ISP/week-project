@@ -16,6 +16,12 @@ const userlist = [{
       password: 'wangjiawei',
       chinese: '汪嘉伟',
       email: 'wangjiawei@tp-link.com.cn'
+    },{
+      id: '4',
+      username: 'cuihuani',
+      password: 'cuihuani',
+      chinese: '崔花妮',
+      email: 'cuihuani@tp-link.com.cn'
     }];
 
 module.exports.findOne = function(username, callback) {

@@ -41,10 +41,12 @@ const WeeklySchema = new Schema({
 });
 
 const DeviceSchema = new Schema({
-  name: {type: String, required: true},
+  serial: {type: String, required: true},
   owner: {type: String},
   keeper: {type: String},
   platform: {type: String},
+  rectime:{type: String},
+  backtime:{type:String},
   description: {type: String},
   updated: String
 });
