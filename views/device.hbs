@@ -1,0 +1,50 @@
+<div>
+  <div class="page-header">
+  <h1>Device list</h1>{{#if adminuser}}<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  Add device
+</button>{{/if}}
+</div>
+  <table class="table table-bordered">
+    <tr>
+      <th >项目名称</th>
+      <th >状态</th>
+      <th >地区</th>
+      <th >研发</th>
+      <th >前线</th>
+      <th >产品</th>
+      <th></th>
+    </tr>
+    {{#each projects}}
+    <tr>
+      <td ><a href="/projectDetail?id={{_id}}">{{name}}</a></td>
+      <td >{{status}}</td>
+      <td >{{area}}</td>
+      <td >{{maintainer}}</td>
+      <td >{{frontling}}</td>
+      <td >{{product}}</td>
+      <td><button type="button" class="btn btn-link"><a href="/delProject?id={{_id}}">删除</a></button></td>
+    </tr>
+    {{/each}}
+  </table>
+  <!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        {{!-- <button type="button" class="btn btn-primary">Save changes</button> --}}
+      </div>
+    </div>
+  </div>
+</div>
+</div>

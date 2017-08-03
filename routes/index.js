@@ -233,13 +233,29 @@ router.post('/weekly', function (req, res) {
 // })
 
 router.get('/device', function (req, res) {
+  var Device = model.Device;
   if(req.isAuthenticated()){
+    Device.find(function (err, devices) {
+    if (err) {
+      req.flash('error', 'something wrong with database.');
+      res.redirect('/');
+    }
+
+    if(req.user.username == 'cuihuani') {
+      return res.render('device', {
+        devices: devices,
+        username: req.user.username,
+        adminuser: true
+      })
+    }
+
     return res.render('device', {
-      title: "device",
+      devices: devices,
       username: req.user.username
-    });
+    })
+  })
   }else{
-    res.redirect('/login');
+    res.redirect('/');
   }
 })
 

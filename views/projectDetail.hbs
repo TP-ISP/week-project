@@ -83,20 +83,9 @@
     </div>
   </div>
 </div>
-
-{{!-- <div class="form-group">
-    <div class="list-group">
-        <label>已经完成的计划：</label> {{#each project.finished}}
-        <a href="#" class="list-group-item active">
-            <h4 class="list-group-item-heading">{{time}}</h4>
-            <p class="list-group-item-text">{{text}}</p>
-        </a>
-        {{/each}}
-    </div>
-</div> --}}
 <div class="row">
     <div class="page-header">
-  <h2>当前计划</h2>
+  <h2>下阶段计划</h2>
 </div>
   <div class="well">
     <div class="panel panel-default">
@@ -108,21 +97,6 @@
 
 </div>
  <div class="row">
-{{!-- <div class="page-header">
-  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseFinished" aria-expanded="false" aria-controls="collapseFinished">
-  点击展开
-</button>
-</div>
-<div class="collapse" id="collapseFinished">
-  <div class="well">
-    {{#each project.finished}}
-        <a href="#" class="list-group-item active">
-            <h4 class="list-group-item-heading">{{time}}</h4>
-            <p class="list-group-item-text">{{text}}</p>
-        </a>
-        {{/each}}
-  </div>
-</div> --}}
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#finished">Finished Work</button>
 
 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="finished">
