@@ -3,6 +3,7 @@ var router = express.Router();
 const passport = require('passport');
 const model = require('../model/model');
 const moment = require('moment');
+const userlist = require('../model/user');
 // const restc = require('restc');
 
 
@@ -91,7 +92,11 @@ router.get('/addProject', function(req, res){
     if(req.user.username === "admin"){
       res.render('addProject',{
         title: 'add proejct',
-        username: req.user.username
+        username: req.user.username,
+        userlist: userlist.userlist,
+        leaderlist: userlist.leaderlist,
+        pmlist: userlist.pmlist,
+        fmlist: userlist.fmlist
       })
     }else{
       res.redirect('/user')
@@ -115,10 +120,10 @@ router.post('/addProject', function(req, res){
       maintainer: req.body.maintainer,
       frontling: req.body.frontling,
       product: req.body.product,
-      finished: [{time: moment().month() + '-' + moment().date(), text:"还没有完成任何计划"}],
-      plan: {time:moment().month() + '-' + moment().date(),text:req.body.plan},
+      finished: [{time: moment().format('l'), text:"还没有完成任何计划"}],
+      plan: {time:moment().format('l'),text:req.body.plan},
       description: req.body.description,
-      updated: moment().date()
+      updated: moment().format('l')
     };
     // console.log(req.body.maintainer)
     var ProjectEntity = new Project(newProject);
@@ -132,7 +137,7 @@ router.post('/addProject', function(req, res){
 router.post('/modProject', function(req,res){
   if(req.isAuthenticated()){
     var Project = model.Project;
-    var Plan = {time: moment().month() + '-' + moment().date(), text: req.body.plan};
+    var Plan = {time: moment().format('l'), text: req.body.plan};
     var id = req.body.id;
     // console.log("modProject---"+id);
     Project.find({_id:id}, function(err, project){
@@ -223,15 +228,6 @@ router.post('/weekly', function (req, res) {
   return res.redirect('/weekly');
 })
 
-// router.get('/weeklyDetail', function(req, res) {
-//   if(req.isAuthenticated()){
-//     res.render('weeklyDetail',{
-//       title: 'weeklyDetail',
-//       username: req.user.username
-//     })
-//   }
-// })
-
 router.get('/device', function (req, res) {
   var Device = model.Device;
   if(req.isAuthenticated()){
@@ -245,7 +241,9 @@ router.get('/device', function (req, res) {
       return res.render('device', {
         devices: devices,
         username: req.user.username,
-        adminuser: true
+        adminuser: true,
+        userlist: userlist.userlist,
+        devicelist: userlist.devicelist
       })
     }
 
@@ -257,6 +255,43 @@ router.get('/device', function (req, res) {
   }else{
     res.redirect('/');
   }
+})
+
+router.post('/device', function(req, res){
+  if(req.isAuthenticated()){
+    var serial = req.body.serial;
+    var rectime = moment().format('l');
+    var backtime = req.body.backtime;
+    var description = req.body.description;
+    var keeper = req.body.keeper;
+    var updated = moment().format('l');
+    var insertData = {
+      serial: serial,
+      owner: "cuihuani",
+      keeper: keeper,
+      rectime:rectime,
+      backtime:backtime,
+      description: description,
+      updated: String
+    };
+    console.log(insertData);
+    var Device = model.Device;
+    var thisDeviceEntity = new Device(insertData);
+    thisDeviceEntity.save();
+  }
+
+  return res.redirect('/device');  
+})
+
+router.get('/delDevice', function(req, res) {
+  var serial = req.query.serial;
+  console.log(req.query);
+  var Device = model.Device;
+  Device.remove({serial: serial},
+  (err)=>{
+    console.log('Device removed.');
+  })
+  res.redirect('/device');
 })
 
 router.get('/addWeekly', function (req, res) {
@@ -282,7 +317,7 @@ router.get('/delWeekly',function(req, res){
     console.log('weekly deleted:', weekly);
     return res.redirect('/weekly');
   });
-  // return res.redirect('/weekly');
+
 })
 
 function isLoggedIn(req, res, next) {

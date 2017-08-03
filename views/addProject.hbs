@@ -22,29 +22,43 @@
     <div class="form-group">
         <label for="leader">研发组：</label>
         <select class="form-control" name="leader">
-  <option value="温震宇">温震宇</option>
-  <option value="钟联波">钟联波</option>
-  <option value="蔡及第">蔡及第</option>
-  <option value="李伟">李伟</option>
-</select>
+            {{#each leaderlist}}
+            <option value={{name}}>{{chinese}}</option>
+            {{/each}}
+        </select>
     </div>
     <div class="row">
         <div class="col-sm-4">
             <div class="form-group">
                 <label for="maintainer">研发：</label>
-                <input type="text" class="form-control" id="client" placeholder="RD" name="maintainer">
+                {{!-- <input type="text" class="form-control" id="client" placeholder="RD" name="maintainer"> --}}
+                <select class="form-control" id="maintainer" placeholder="RD" name="maintainer">
+                    {{#each userlist}}
+                    <option value={{name}}>{{chinese}}</option>
+                    {{/each}}
+                </select>
             </div>
         </div>
         <div class="col-sm-4">
             <div class="form-group">
                 <label for="product">产品：</label>
-                <input type="text" class="form-control" id="client" placeholder="PM" name="product">
+                {{!-- <input type="text" class="form-control" id="client" placeholder="PM" name="product"> --}}
+                <select class="form-control" name="leader" id="product" placeholder="PM" name="product">
+                    {{#each pmlist}}
+                        <option value={{name}}>{{chinese}}</option>
+                    {{/each}}
+                </select>
             </div>
         </div>
         <div class="col-sm-4">
             <div class="form-group">
                 <label for="frontling">前线：</label>
-                <input type="text" class="form-control" id="client" placeholder="FM" name="frontling">
+                {{!-- <input type="text" class="form-control" id="client" placeholder="FM" name="frontling"> --}}
+                 <select class="form-control" name="leader" id="frontling" placeholder="PM" name="frontling">
+                    {{#each fmlist}}
+                        <option value={{name}}>{{chinese}}--{{english}}</option>
+                    {{/each}}
+                </select>               
             </div>
         </div>
     </div>

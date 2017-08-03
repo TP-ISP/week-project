@@ -6,23 +6,23 @@
 </div>
   <table class="table table-bordered">
     <tr>
-      <th >项目名称</th>
-      <th >状态</th>
-      <th >地区</th>
-      <th >研发</th>
-      <th >前线</th>
-      <th >产品</th>
+      <th >样机序号</th>
+      <th >样机机型</th>
+      <th >持有人</th>
+      <th >保管人</th>
+      <th >借出时间</th>
+      <th >预计归还时间</th>
       <th></th>
     </tr>
-    {{#each projects}}
+    {{#each devices}}
     <tr>
-      <td ><a href="/projectDetail?id={{_id}}">{{name}}</a></td>
-      <td >{{status}}</td>
-      <td >{{area}}</td>
-      <td >{{maintainer}}</td>
-      <td >{{frontling}}</td>
-      <td >{{product}}</td>
-      <td><button type="button" class="btn btn-link"><a href="/delProject?id={{_id}}">删除</a></button></td>
+      <td >{{serial}}</td>
+      <td >{{description}}</td>
+      <td >{{owner}}</td>
+      <td >{{keeper}}</td>
+      <td >{{rectime}}</td>
+      <td >{{backtime}}</td>
+      <td><button type="button" class="btn btn-link"><a href="/delDevice?serial={{serial}}">删除</a></button></td>
     </tr>
     {{/each}}
   </table>
@@ -38,7 +38,45 @@
         <h4 class="modal-title" id="myModalLabel">Modal title</h4>
       </div>
       <div class="modal-body">
-        ...
+        <form action="/device" method="post">
+  <div class="form-group">
+    <label for="device_serial">Device Serial Number</label>
+    <input type="text" class="form-control" id="device_serial" placeholder="样机序列号" name="serial">
+  </div>
+  <div class="form-group">
+    <label for="owner">管理员</label>
+    <input type="text" class="form-control" value="崔花妮" disabled name="owner">
+  </div>
+    <label for="model">机型：</label>
+    <select class="form-control" name="description" id="model" placeholder="model" >
+        {{#each devicelist}}
+            <option value={{model}}>{{model}}  {{version}}</option>
+        {{/each}}
+    </select>  
+    <label for="keeper">借用人：</label>
+    <select class="form-control" name="keeper" id="keeper" placeholder="keeper" >
+        {{#each userlist}}
+            <option value={{username}}>{{chinese}}</option>
+        {{/each}}
+    </select> 
+    <div class="form-group">
+        <label for="rectime">借用时间</label>
+        <input type="text" class="form-control" name="rectime" id="rectime" disabled>
+    </div> 
+    <div class="form-group">
+        <label for="backtime">归还时间</label>
+        <input type="text" class="form-control" name="backtime" id="backtime" placeholder="请按照借用时间的格式输入">
+    </div> 
+
+  <button type="submit" class="btn btn-default">Submit</button>
+</form>
+<script>
+
+     window.onload = function(){
+            $('#rectime').val(moment().format('l'));
+       }
+
+</script>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

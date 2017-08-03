@@ -44,7 +44,6 @@ const DeviceSchema = new Schema({
   serial: {type: String, required: true},
   owner: {type: String},
   keeper: {type: String},
-  platform: {type: String},
   rectime:{type: String},
   backtime:{type:String},
   description: {type: String},
