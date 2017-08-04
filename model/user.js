@@ -132,6 +132,14 @@ module.exports.findOne = function(username, callback) {
     }
 }
 
+module.exports.toChinese = function(username) {
+    for(i=0; i<userlist.length;i++){
+        if(userlist[i].username == username){
+            return userlist[i].chinese;
+        }
+    }
+}
+
 module.exports.userlist = userlist;
 module.exports.leaderlist = leaderlist;
 module.exports.pmlist = pmlist;

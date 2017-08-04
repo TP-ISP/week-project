@@ -26,7 +26,7 @@ router.get('/', function (req, res, next) {
   req.flash('info', 'Welcome');
   res.render('index', {
     title: 'Express',
-    username:"anonymous"
+    username: "anonymous"
   });
 });
 
@@ -47,7 +47,7 @@ router.all('/users', isLoggedIn);
 router.get('/users', function (req, res, next) {
   res.render('user', {
     title: 'User List',
-    username: req.user.username
+    username: userlist.toChinese(req.user.username)
   })
 });
 
@@ -58,40 +58,42 @@ router.get('/logout', function (req, res) {
 
 router.get('/project', function (req, res) {
   var Project = model.Project;
-  if(req.isAuthenticated()){
+  if (req.isAuthenticated()) {
     Project.find(function (err, projects) {
-    if (err) {
-      req.flash('error', 'something wrong with database.');
-      res.redirect('/');
-    }
+      if (err) {
+        req.flash('error', 'something wrong with database.');
+        res.redirect('/');
+      }
 
-    if(req.user.username == 'admin') {
+      if (req.user.username == 'admin') {
+        return res.render('project', {
+          projects: projects,
+          username: userlist.toChinese(req.user.username),
+          adminuser: true
+        })
+      }
+
       return res.render('project', {
         projects: projects,
-        username: req.user.username,
-        adminuser: true
+        username: userlist.toChinese(req.user.username)
       })
-    }
-
-    return res.render('project', {
-      projects: projects,
-      username: req.user.username
     })
-  })
-  }else{
+  } else {
     res.redirect('/');
   }
 });
 
-router.get('/projectDetail', function (req,res){
+router.get('/projectDetail', function (req, res) {
   var id = req.query.id;
-  var username = req.user?req.user.username:"anonymous";
+  var username = req.user ? req.user.username : "anonymous";
   var Project = model.Project;
-  Project.find({_id: id}, function(err, project){
-    if(err) {
+  Project.find({
+    _id: id
+  }, function (err, project) {
+    if (err) {
       return res.redirect('/error');
     }
-    return res.render('projectDetail',{
+    return res.render('projectDetail', {
       title: "project detail",
       project: project[0],
       username: username
@@ -99,30 +101,30 @@ router.get('/projectDetail', function (req,res){
   })
 });
 
-router.get('/addProject', function(req, res){
-  if(req.isAuthenticated()){
-    if(req.user.username === "admin"){
-      res.render('addProject',{
+router.get('/addProject', function (req, res) {
+  if (req.isAuthenticated()) {
+    if (req.user.username === "admin") {
+      res.render('addProject', {
         title: 'add proejct',
-        username: req.user.username,
+        username: userlist.toChinese(req.user.username),
         userlist: userlist.userlist,
         leaderlist: userlist.leaderlist,
         pmlist: userlist.pmlist,
         fmlist: userlist.fmlist
       })
-    }else{
+    } else {
       res.redirect('/user')
     }
-  }else{
+  } else {
     return res.redirect("/");
   }
 });
 
-router.post('/addProject', function(req, res){
-  if(req.isAuthenticated()){
+router.post('/addProject', function (req, res) {
+  if (req.isAuthenticated()) {
     var Project = model.Project;
     var newProject = {
-      name: req.body.name,
+      name: userlist.toChinese(req.user.username),
       status: "正常",
       area: req.body.area,
       client: req.body.client,
@@ -132,8 +134,14 @@ router.post('/addProject', function(req, res){
       maintainer: req.body.maintainer,
       frontling: req.body.frontling,
       product: req.body.product,
-      finished: [{time: moment().format('l'), text:"还没有完成任何计划"}],
-      plan: {time:moment().format('l'),text:req.body.plan},
+      finished: [{
+        time: moment().format('l'),
+        text: "还没有完成任何计划"
+      }],
+      plan: {
+        time: moment().format('l'),
+        text: req.body.plan
+      },
       description: req.body.description,
       updated: moment().format('l')
     };
@@ -141,19 +149,24 @@ router.post('/addProject', function(req, res){
     var ProjectEntity = new Project(newProject);
     ProjectEntity.save();
     res.redirect('/project');
-  }else{
+  } else {
     return res.redirect('/user');
   };
 })
 
-router.post('/modProject', function(req,res){
-  if(req.isAuthenticated()){
+router.post('/modProject', function (req, res) {
+  if (req.isAuthenticated()) {
     var Project = model.Project;
-    var Plan = {time: moment().format('l'), text: req.body.plan};
+    var Plan = {
+      time: moment().format('l'),
+      text: req.body.plan
+    };
     var id = req.body.id;
     // console.log("modProject---"+id);
-    Project.find({_id:id}, function(err, project){
-      if(err){
+    Project.find({
+      _id: id
+    }, function (err, project) {
+      if (err) {
         console.log(err);
       }
       project[0].status = req.body.status;
@@ -161,25 +174,25 @@ router.post('/modProject', function(req,res){
       var finished = project[0].finished;
       var plan = project[0].plan;
       finished.push(plan);
-      console.log("modProject---"+finished);
+      console.log("modProject---" + finished);
       project[0].finished = finished;
       project[0].plan = Plan;
       project[0].description = req.body.description;
       console.log(project[0]);
       project[0].save();
-      console.log("modProject---"+project[0].finished);
+      console.log("modProject---" + project[0].finished);
     });
-    res.redirect('/projectDetail?id='+req.body.id);
-  }else{
-  res.redirect('/project');
+    res.redirect('/projectDetail?id=' + req.body.id);
+  } else {
+    res.redirect('/project');
   }
 })
 
-router.get("/delProject", function(req, res){
+router.get("/delProject", function (req, res) {
   var Project = model.Project;
   var id = req.query.id;
-  Project.findByIdAndRemove(id, function(err, project){
-    if(err){
+  Project.findByIdAndRemove(id, function (err, project) {
+    if (err) {
       console.log(err);
     }
 
@@ -191,41 +204,43 @@ router.get('/weekly', function (req, res) {
   if (req.isAuthenticated()) {
     var Weekly = model.Weekly;
     // console.log(Weekly);
-    var username = req.user.username;
-    var wherestr ={};
-    if(username === 'admin'){
-      wherestr = {}; 
-    }else{
+    var username = userlist.toChinese(req.user.username);
+    var wherestr = {};
+    if (username === '管理员') {
+      wherestr = {};
+    } else {
       wherestr = {
         name: username
       }
     }
 
     Weekly.find(wherestr)
-    .sort({'_id':-1})
-    .exec(
-    function (err, weeklys) {
-      if (err) {
-        return res.redirect('/');
-      } else {
-        // console.log(weeklys);
-        return res.render('weekly', {
-          title: "weekly",
-          weeklys: weeklys,
-          username: username
-        })
-      }
-    }
-    );
+      .sort({
+        '_id': -1
+      })
+      .exec(
+        function (err, weeklys) {
+          if (err) {
+            return res.redirect('/');
+          } else {
+            // console.log(weeklys);
+            return res.render('weekly', {
+              title: "weekly",
+              weeklys: weeklys,
+              username: username
+            })
+          }
+        }
+      );
   } else {
     return res.redirect('/');
   }
 })
 
 router.post('/weekly', function (req, res) {
-  if(req.isAuthenticated()){
-    var name = req.user.username;
-    var week = moment().year().toString()+moment().week().toString();
+  if (req.isAuthenticated()) {
+    var name = userlist.toChinese(req.user.username);
+    var week = moment().year().toString() + moment().week().toString();
     var involve = req.body.involve;
     var done = req.body.done;
     var plan = req.body.plan;
@@ -249,18 +264,18 @@ router.post('/weekly', function (req, res) {
     let mailOptions = {
       from: '"周报管理系统" <zhangwei_w8284@tp-link.com.cn>',
       to: 'wangjiawei@tp-link.com.cn',
-      subject: '【工作汇报】第'+week+'周工作汇报',
-      text: done+'\n'+plan,
-      html: '<p>'+done+'</p><br><p>'+plan+'</p>'
+      subject: '【工作汇报】第' + week + '周工作汇报',
+      text: done + '\n' + plan,
+      html: '<p>' + done + '</p><br><p>' + plan + '</p>'
     }
 
     // send mail with defined transport object
-transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
         return console.log(error);
-    }
-    console.log('Message %s sent: %s', info.messageId, info.response);
-});
+      }
+      console.log('Message %s sent: %s', info.messageId, info.response);
+    });
   }
 
   return res.redirect('/weekly');
@@ -268,35 +283,35 @@ transporter.sendMail(mailOptions, (error, info) => {
 
 router.get('/device', function (req, res) {
   var Device = model.Device;
-  if(req.isAuthenticated()){
+  if (req.isAuthenticated()) {
     Device.find(function (err, devices) {
-    if (err) {
-      req.flash('error', 'something wrong with database.');
-      res.redirect('/');
-    }
+      if (err) {
+        req.flash('error', 'something wrong with database.');
+        res.redirect('/');
+      }
 
-    if(req.user.username == 'cuihuani') {
+      if (req.user.username == 'cuihuani') {
+        return res.render('device', {
+          devices: devices,
+          username: userlist.toChinese(req.user.username),
+          adminuser: true,
+          userlist: userlist.userlist,
+          devicelist: userlist.devicelist
+        })
+      }
+
       return res.render('device', {
         devices: devices,
-        username: req.user.username,
-        adminuser: true,
-        userlist: userlist.userlist,
-        devicelist: userlist.devicelist
+        username: userlist.toChinese(req.user.username)
       })
-    }
-
-    return res.render('device', {
-      devices: devices,
-      username: req.user.username
     })
-  })
-  }else{
+  } else {
     res.redirect('/');
   }
 })
 
-router.post('/device', function(req, res){
-  if(req.isAuthenticated()){
+router.post('/device', function (req, res) {
+  if (req.isAuthenticated()) {
     var serial = req.body.serial;
     var rectime = moment().format('l');
     var backtime = req.body.backtime;
@@ -307,8 +322,8 @@ router.post('/device', function(req, res){
       serial: serial,
       owner: "cuihuani",
       keeper: keeper,
-      rectime:rectime,
-      backtime:backtime,
+      rectime: rectime,
+      backtime: backtime,
       description: description,
       updated: String
     };
@@ -316,40 +331,57 @@ router.post('/device', function(req, res){
     var Device = model.Device;
     var thisDeviceEntity = new Device(insertData);
     thisDeviceEntity.save();
+    let mailOptions = {
+      from: '"样机管理系统" <zhangwei_w8284@tp-link.com.cn>',
+      to: 'wangjiawei@tp-link.com.cn, cuihuani@tp-link.com.cn, zhangwei_w8284@tp-link.com.cn',
+      subject: '【样机管理】序列号' + serial + '借用人'+ keeper,
+      text: '借用人：'+keeper+ '\n 借用时间'+rectime+'\n 预计归还时间'+backtime,
+      html: '<p>' + keeper + '</p><br><p>' + backtime + '</p>'
+    }
+
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return console.log(error);
+      }
+      console.log('Message %s sent: %s', info.messageId, info.response);
+    });
   }
 
-  return res.redirect('/device');  
+  return res.redirect('/device');
 })
 
-router.get('/delDevice', function(req, res) {
+router.get('/delDevice', function (req, res) {
   var serial = req.query.serial;
   console.log(req.query);
   var Device = model.Device;
-  Device.remove({serial: serial},
-  (err)=>{
-    console.log('Device removed.');
-  })
+  Device.remove({
+      serial: serial
+    },
+    (err) => {
+      console.log('Device removed.');
+    })
   res.redirect('/device');
 })
 
 router.get('/addWeekly', function (req, res) {
-  if(req.isAuthenticated()){
+  if (req.isAuthenticated()) {
     console.log(req.user);
-    return res.render('addWeekly',{
+    return res.render('addWeekly', {
       title: "addWeekly",
-      username: req.user.username
+      username: userlist.toChinese(req.user.username)
     });
   }
 
   return res.redirect('/');
 })
 
-router.get('/delWeekly',function(req, res){
+router.get('/delWeekly', function (req, res) {
   var id = req.query.id;
   console.log(req.query);
   var Weekly = model.Weekly;
-  Weekly.findByIdAndRemove(id, function(err, weekly){
-    if(err){
+  Weekly.findByIdAndRemove(id, function (err, weekly) {
+    if (err) {
       console.log(err);
     }
     console.log('weekly deleted:', weekly);
