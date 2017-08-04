@@ -180,11 +180,19 @@ router.get('/weekly', function (req, res) {
     var Weekly = model.Weekly;
     // console.log(Weekly);
     var username = req.user.username;
-    // console.log(username);
-    var wherestr = {
-      'name': username
-    };
-    Weekly.find(wherestr,function (err, weeklys) {
+    var wherestr ={};
+    if(username === 'admin'){
+      wherestr = {}; 
+    }else{
+      wherestr = {
+        name: username
+      }
+    }
+
+    Weekly.find(wherestr)
+    .sort({'_id':-1})
+    .exec(
+    function (err, weeklys) {
       if (err) {
         return res.redirect('/');
       } else {
@@ -195,7 +203,8 @@ router.get('/weekly', function (req, res) {
           username: username
         })
       }
-    })
+    }
+    );
   } else {
     return res.redirect('/');
   }
@@ -204,12 +213,12 @@ router.get('/weekly', function (req, res) {
 router.post('/weekly', function (req, res) {
   if(req.isAuthenticated()){
     var name = req.user.username;
-    var week = moment().week();
+    var week = moment().year().toString()+moment().week().toString();
     var involve = req.body.involve;
     var done = req.body.done;
     var plan = req.body.plan;
     var description = req.body.description;
-    var updated = moment().date();
+    var updated = moment().format('l');
     var insertData = {
       week: week,
       name: name,
