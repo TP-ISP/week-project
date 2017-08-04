@@ -10,6 +10,17 @@ const nodemailer = require('nodemailer');
 
 // router.use(restc.express());
 
+//setup email data with unicode symbols
+let transporter = nodemailer.createTransport({
+  host: 'smtp.tp-link.com.cn',
+  port: 587,
+  secure: false,
+  auth: {
+    user: 'zhangwei_w8284@tp-link.com.cn',
+    pass: 'Zz19921221'
+  }
+});
+
 /* GET home page. */
 router.get('/', function (req, res, next) {
   req.flash('info', 'Welcome');
@@ -233,6 +244,23 @@ router.post('/weekly', function (req, res) {
     var Weekly = model.Weekly;
     var thisweekEntity = new Weekly(insertData);
     thisweekEntity.save();
+
+    //sending email
+    let mailOptions = {
+      from: '"周报管理系统" <zhangwei_w8284@tp-link.com.cn>',
+      to: 'wangjiawei@tp-link.com.cn',
+      subject: '【工作汇报】第'+week+'周工作汇报',
+      text: done+'\n'+plan,
+      html: '<p>'+done+'</p><br><p>'+plan+'</p>'
+    }
+
+    // send mail with defined transport object
+transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+        return console.log(error);
+    }
+    console.log('Message %s sent: %s', info.messageId, info.response);
+});
   }
 
   return res.redirect('/weekly');

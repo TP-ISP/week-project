@@ -130,7 +130,6 @@ module.exports.findOne = function(username, callback) {
             callback(null, userlist[i]);
         }
     }
-
 }
 
 module.exports.userlist = userlist;
