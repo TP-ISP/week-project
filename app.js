@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 const session = require('express-session');
 const flash = require('express-flash');
 const passport = require('passport');
+const nodemailer = require('nodemailer');
 
 var LocalStrategy = require('passport-local');
 
@@ -61,15 +62,6 @@ passport.use('local', new LocalStrategy(
       return done(null, user);
     })
 
-    // if (username !== user.username) {
-    //   return done(null, false, {message: 'Wrong name'});
-    // }
-
-    // if(password !== password){
-    //   return done(null, false, {message: 'Wrong password'})
-    // }
-
-    // return done(null, user);
   }
 ));
 
@@ -79,6 +71,17 @@ passport.serializeUser(function (user, done){
 
 passport.deserializeUser(function (user, done){
   done(null, user);
+});
+
+//setup email data with unicode symbols
+let transporter = nodemailer.createTransport({
+  host: 'smtp.tp-link.com.cn',
+  port: 465,
+  secure: true,
+  auth: {
+    user: 'zhangwei_w8284@tp-link.com.cn',
+    pass: 'Zz19921221'
+  }
 });
 
 app.use('/', routes);
