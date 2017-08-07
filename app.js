@@ -8,6 +8,10 @@ const session = require('express-session');
 const flash = require('express-flash');
 const passport = require('passport');
 const nodemailer = require('nodemailer');
+const multer = require('multer');
+
+//multer文件上传路径设置
+const upload = multer({dest:'share/'});
 
 var LocalStrategy = require('passport-local');
 

@@ -387,7 +387,21 @@ router.get('/delWeekly', function (req, res) {
     console.log('weekly deleted:', weekly);
     return res.redirect('/weekly');
   });
+})
 
+router.get('/share', function(req, res){
+  if (req.isAuthenticated()){
+    res.render('share', {
+      title: '文件分享',
+      username: userlist.toChinese(req.user.username)
+    });
+  }else{
+    res.redirect('/login')
+  }
+})
+
+router.post('/share', function (req, res){
+  
 })
 
 function isLoggedIn(req, res, next) {
